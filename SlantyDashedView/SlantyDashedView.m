@@ -8,6 +8,16 @@
 
 #import "SlantyDashedView.h"
 
+static NSInteger kAnimationFrameInterval = 1;
+
+@interface SlantyDashedView ()
+
+@property (nonatomic, strong) CADisplayLink *displayLink;
+@property (nonatomic, assign) CGFloat animationSpeed;
+@property (nonatomic, assign) CGFloat currentPhase;
+
+@end
+
 @implementation SlantyDashedView
 
 #pragma mark - Initializers
@@ -100,11 +110,11 @@
     CGContextSetStrokeColorWithColor(context, [self.dashColor CGColor]);
     CGContextSetLineWidth(context, self.dashWidth);
     
-    CGFloat currentX = 0.0f;
+    CGFloat currentX = fmodf(self.currentPhase, self.dashSpacing + self.dashWidth) - (self.horizontalTranslation + self.dashWidth/2.0f);
     CGFloat viewWidth = CGRectGetWidth(self.bounds);
     CGFloat viewHeight = CGRectGetHeight(self.bounds);
     
-    while (currentX - (self.dashWidth/2.0f) < viewWidth)
+    while (currentX < viewWidth + self.dashWidth/2.0f)
     {
         CGContextMoveToPoint(context, currentX, -self.dashWidth/2.0f);
         CGContextAddLineToPoint(context, currentX + self.horizontalTranslation, viewHeight + self.dashWidth/2.0f);
@@ -112,6 +122,50 @@
     }
     
     CGContextStrokePath(context);
+}
+
+#pragma mark - Public
+
+- (void)startAnimatingWithSpeed:(NSTimeInterval)speed
+{
+    if (self.isAnimating)
+    {
+        NSAssert(NO, @"Dashed view is already animating. Call 'stopAnimating' first");
+        return;
+    }
+    
+    _animating = YES;
+    self.animationSpeed = speed * kAnimationFrameInterval;
+    self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(animationTimerFired:)];
+    self.displayLink.frameInterval = kAnimationFrameInterval;
+    [self.displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
+}
+
+- (void)stopAnimating
+{
+    if (!self.isAnimating)
+    {
+        NSAssert(NO, @"Called %@ when dashed view was not animating", NSStringFromSelector(_cmd));
+        return;
+    }
+    
+    _animating = NO;
+    [self.displayLink invalidate];
+    self.displayLink = nil;
+}
+
+#pragma mark - Private
+
+- (void)animationTimerFired:(CADisplayLink *)timer
+{
+    CGFloat update = (timer.duration * self.animationSpeed);
+    if (self.animationDirection == SlantyDashedViewAnimationDirectionRightToLeft)
+    {
+        update = -update;
+    }
+    
+    self.currentPhase += update;
+    [self setNeedsDisplay];
 }
 
 @end

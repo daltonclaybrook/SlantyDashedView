@@ -11,6 +11,8 @@
 
 @interface ViewController : UIViewController
 
-@property (nonatomic, weak) IBOutlet SlantyDashedView *dashedView;
+@property (nonatomic, weak) IBOutlet SlantyDashedView *dashedView1;
+@property (nonatomic, weak) IBOutlet SlantyDashedView *dashedView2;
+@property (nonatomic, weak) IBOutlet SlantyDashedView *dashedView3;
 
 @end

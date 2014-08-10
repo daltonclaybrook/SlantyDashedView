@@ -10,9 +10,9 @@
 
 @interface SlantyDashedView : UIView
 
-@property (nonatomic, strong) UIColor *dashColor;
-@property (nonatomic, assign) CGFloat dashWidth;
-@property (nonatomic, assign) CGFloat dashSpacing;
-@property (nonatomic, assign) CGFloat horizontalTranslation;
+@property (nonatomic, strong) UIColor *dashColor;   // default black
+@property (nonatomic, assign) CGFloat dashWidth;    // default 10.0f
+@property (nonatomic, assign) CGFloat dashSpacing;  // default 10.0f
+@property (nonatomic, assign) CGFloat horizontalTranslation;    // default 8.0f
 
 @end

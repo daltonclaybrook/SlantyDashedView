@@ -104,7 +104,7 @@
     CGFloat viewWidth = CGRectGetWidth(self.bounds);
     CGFloat viewHeight = CGRectGetHeight(self.bounds);
     
-    while (currentX < viewWidth)
+    while (currentX - (self.dashWidth/2.0f) < viewWidth)
     {
         CGContextMoveToPoint(context, currentX, -self.dashWidth/2.0f);
         CGContextAddLineToPoint(context, currentX + self.horizontalTranslation, viewHeight + self.dashWidth/2.0f);

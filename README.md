@@ -3,4 +3,4 @@ SlantyDashedView
 A view requested by a redditor
 
 ##Examples:
-![image](https://raw.githubusercontent.com/daltonclaybrook/SlantyDashedView/master/examples.png =320x)
+![image](https://raw.githubusercontent.com/daltonclaybrook/SlantyDashedView/master/examples.png)

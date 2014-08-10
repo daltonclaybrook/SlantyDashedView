@@ -8,8 +8,6 @@
 
 #import "SlantyDashedView.h"
 
-static CGFloat const kSlantDistance = 8.0f;
-
 @implementation SlantyDashedView
 
 #pragma mark - Initializers
@@ -49,6 +47,7 @@ static CGFloat const kSlantDistance = 8.0f;
     _dashColor = [UIColor blackColor];
     _dashWidth = 10.0f;
     _dashSpacing = 10.0f;
+    _horizontalTranslation = 8.0f;
 }
 
 #pragma mark - Accessors
@@ -83,6 +82,16 @@ static CGFloat const kSlantDistance = 8.0f;
     [self setNeedsDisplay];
 }
 
+- (void)setHorizontalTranslation:(CGFloat)horizontalTranslation
+{
+    if (fabsf(_horizontalTranslation - horizontalTranslation) < FLT_EPSILON)
+    {
+        return;
+    }
+    _horizontalTranslation = horizontalTranslation;
+    [self setNeedsDisplay];
+}
+
 #pragma mark - UIView
 
 - (void)drawRect:(CGRect)rect
@@ -98,7 +107,7 @@ static CGFloat const kSlantDistance = 8.0f;
     while (currentX < viewWidth)
     {
         CGContextMoveToPoint(context, currentX, -self.dashWidth/2.0f);
-        CGContextAddLineToPoint(context, currentX + kSlantDistance, viewHeight + self.dashWidth/2.0f);
+        CGContextAddLineToPoint(context, currentX + self.horizontalTranslation, viewHeight + self.dashWidth/2.0f);
         currentX += (self.dashSpacing + self.dashWidth);
     }
     

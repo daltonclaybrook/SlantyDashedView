@@ -13,5 +13,6 @@
 @property (nonatomic, strong) UIColor *dashColor;
 @property (nonatomic, assign) CGFloat dashWidth;
 @property (nonatomic, assign) CGFloat dashSpacing;
+@property (nonatomic, assign) CGFloat horizontalTranslation;
 
 @end

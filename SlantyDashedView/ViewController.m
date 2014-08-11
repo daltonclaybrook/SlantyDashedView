@@ -39,10 +39,12 @@
     self.dashedView3.dashColor = [self r:215 g:119 b:215];
     self.dashedView3.dashWidth = 4.0f;
     self.dashedView3.dashSpacing = 12.0f;
-    self.dashedView3.horizontalTranslation = 16.0f;
+    self.dashedView3.horizontalTranslation = -16.0f;
     
     self.dashedView2.animationDirection = SlantyDashedViewAnimationDirectionRightToLeft;
     [self.dashedView2 startAnimatingWithSpeed:40.0f];
+    
+    [self.dashedView3 startAnimatingWithSpeed:40.0f];
 }
 
 - (UIColor *)r:(CGFloat)r g:(CGFloat)g b:(CGFloat)b

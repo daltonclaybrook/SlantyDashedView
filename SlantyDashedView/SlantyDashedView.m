@@ -110,11 +110,11 @@ static NSInteger kAnimationFrameInterval = 1;
     CGContextSetStrokeColorWithColor(context, [self.dashColor CGColor]);
     CGContextSetLineWidth(context, self.dashWidth);
     
-    CGFloat currentX = fmodf(self.currentPhase, self.dashSpacing + self.dashWidth) - (self.horizontalTranslation + self.dashWidth/2.0f);
+    CGFloat currentX = fmodf(self.currentPhase, self.dashSpacing + self.dashWidth) - (fabsf(self.horizontalTranslation) + self.dashWidth/2.0f);
     CGFloat viewWidth = CGRectGetWidth(self.bounds);
     CGFloat viewHeight = CGRectGetHeight(self.bounds);
     
-    while (currentX < viewWidth + self.dashWidth/2.0f)
+    while (currentX < viewWidth + self.dashWidth/2.0f + fabsf(self.horizontalTranslation))
     {
         CGContextMoveToPoint(context, currentX, -self.dashWidth/2.0f);
         CGContextAddLineToPoint(context, currentX + self.horizontalTranslation, viewHeight + self.dashWidth/2.0f);
